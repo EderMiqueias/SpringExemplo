@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.example.course.entities.pk.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_order_item")
@@ -14,7 +15,7 @@ public class OrderItem implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@EmbeddedId
-	private OrderItemPK id;
+	private OrderItemPK id = new OrderItemPK();
 	
 	private Integer quantity;
 	private Double price;
@@ -28,8 +29,9 @@ public class OrderItem implements Serializable{
 		this.price = price;
 	}
 	
+	@JsonIgnore
 	public Order getOrder() {
-		return id.getOrder();
+		return this.id.getOrder();
 	}
 	
 	public void setOrder(Order order) {
@@ -37,7 +39,7 @@ public class OrderItem implements Serializable{
 	}
 	
 	public Product getProduct() {
-		return id.getProduct();
+		return this.id.getProduct();
 	}
 	
 	public void setProduct(Product product) {
